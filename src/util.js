@@ -1,4 +1,7 @@
 const inquirer = require('inquirer');
+const data = require('./data');
+const Round = require('./Round');
+const prototypeQuestions = data.prototypeData;
 
 const genList = (round) => {
   let card = round.returnCurrentCard();
@@ -35,8 +38,13 @@ async function main(round) {
   const getAnswer = await inquirer.prompt(genList(currentRound));
   const getConfirm = await inquirer.prompt(confirmUpdate(getAnswer.answers, round));
 
-    if(!round.returnCurrentCard()) {
+    if(!round.returnCurrentCard() && round.endRound() !== false) {
       round.endRound();
+      return false;
+    } else if(!round.returnCurrentCard()) {
+      round.endRound();
+      round = new Round(prototypeQuestions);
+      main(round);
     } else {
       main(round);
     }
