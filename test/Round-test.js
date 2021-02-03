@@ -77,7 +77,10 @@ describe('Round', () => {
       question: 'What is Robbie\'s favorite animal',
       answers: ['sea otter', 'pug', 'capybara'],
       correctAnswer: 'sea otter'
-    }];
+    }, {id: 1,
+      question: 'What is Robbie\'s favorite animal',
+      answers: ['sea otter', 'pug', 'capybara'],
+      correctAnswer: 'sea otter'}];
     const round = new Round(arr);
     round.takeTurn('sea otter');
     expect(round.calculatePercentCorrect()).to.equal(100);
