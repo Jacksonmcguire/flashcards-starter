@@ -12,23 +12,24 @@ describe('Game', () => {
     expect(game.currentRound).to.be.instanceof(Round);
   })
   describe('Start', () => {
-    it.skip('should create cards', () => {
+    it('should create cards', () => {
       const game = new Game();
       game.start();
       expect(game.currentRound.deck[0]).to.be.instanceof(Card);
     })
 
-    it.skip('should put those cards in a deck', () => {
+    it('should put those cards in a deck', () => {
       const game = new Game();
       game.start();
       expect(game.currentRound.deck).to.not.have.length(0);
     })
 
-    it.skip('should create a new round using the deck', () => {
+    it('should create a new round using the deck', () => {
       const game = new Game();
-      const startedGame = game.start();
-      expect(game.currentRound).to.not.equal(startedGame.currentRound);
-      expect(startedGame.currentRound).to.be.instanceof(Round);
+      const beforeStart = game.currentRound;
+      const afterStart = game.start();
+      expect(beforeStart).to.not.equal(afterStart);
+      expect(afterStart).to.be.instanceof(Round);
     })
   })
 })
