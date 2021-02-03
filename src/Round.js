@@ -19,12 +19,10 @@ class Round {
     this.turns ++;
     const lastCard = this.deck.shift();
     const currentTurn = new Turn(guess, lastCard);
-    if (currentTurn.evaluateGuess()) {
-      return currentTurn.giveFeedback();
-    } else {
+    if (!currentTurn.evaluateGuess() && lastCard !== undefined) {
       this.incorrectGuesses.push(lastCard.id);
-      return currentTurn.giveFeedback();
-    }
+    } 
+    return currentTurn.giveFeedback();
   }
 
   calculatePercentCorrect() {
@@ -38,7 +36,7 @@ class Round {
   }
 
   endRound() {
-    const percentCorrect = this.calculatePercentCorrect();
+    const percentCorrect = Math.ceil(this.calculatePercentCorrect());
     console.log(`** Round over! ** You answered ${percentCorrect}% of the questions correctly!`);
     return `** Round over! ** You answered ${percentCorrect}% of the questions correctly!`;
   }
