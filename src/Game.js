@@ -23,14 +23,14 @@ class Game {
   start() {
     let cards = [];
     prototypeQuestions.forEach(flashcard => {
-      const newCard = new Card
-      (flashcard.id, flashcard.question, 
-        flashcard.answers, flashcard.correctAnswer);
+      const newCard = new Card(flashcard.id, 
+        flashcard.question, 
+        flashcard.answers, 
+        flashcard.correctAnswer);
       cards.push(newCard);
     })
     this.currentRound = new Round(cards);
-    this.printMessage();
-    this.printQuestion(this.currentRound);
+    this.printMessage(); this.printQuestion(this.currentRound);
     return this.currentRound;
   }
 }
