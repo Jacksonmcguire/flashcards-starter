@@ -37,8 +37,13 @@ class Round {
 
   endRound() {
     const percentCorrect = Math.ceil(this.calculatePercentCorrect());
-    console.log(`** Round over! ** You answered ${percentCorrect}% of the questions correctly!`);
-    return `** Round over! ** You answered ${percentCorrect}% of the questions correctly!`;
+    if (percentCorrect >= 90) {
+      console.log(`** Round over! ** You answered ${percentCorrect}% of the questions correctly!`);
+      return `** Round over! ** You answered ${percentCorrect}% of the questions correctly!`;
+    } else {
+      console.log(`SHUCKS! You missed the goal of 90%. Your score was ${percentCorrect}%, try again!`);
+      return false;
+    }
   }
 }
 module.exports = Round;
