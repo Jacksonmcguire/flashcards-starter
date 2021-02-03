@@ -7,15 +7,18 @@ class Round {
   }
 
   returnCurrentCard() {
-    const currentCard = this.deck[0];
-    return currentCard;
+    if (this.deck !== []) {
+      const currentCard = this.deck[0];
+      return currentCard;
+    } else {
+      return false;
+    }
   }
 
   takeTurn(guess) {
     this.turns ++;
     const lastCard = this.deck.shift();
     const currentTurn = new Turn(guess, lastCard);
-    this.deck.push(lastCard);
     if (currentTurn.evaluateGuess()) {
       return currentTurn.giveFeedback();
     } else {
@@ -26,7 +29,7 @@ class Round {
 
   calculatePercentCorrect() {
     if (this.turns > 0) {
-      const incorrect = (this.incorrectGuesses / this.turns);
+      const incorrect = (this.incorrectGuesses.length / this.turns);
       const correct = 1 - incorrect;
       return correct * 100;
     } else {
@@ -35,7 +38,9 @@ class Round {
   }
 
   endRound() {
-    return `** Round over! ** You answered ${this.calculatePercentCorrect()}% of the questions correctly!`;
+    const percentCorrect = this.calculatePercentCorrect();
+    console.log(`** Round over! ** You answered ${percentCorrect}% of the questions correctly!`);
+    return `** Round over! ** You answered ${percentCorrect}% of the questions correctly!`;
   }
 }
 module.exports = Round;
