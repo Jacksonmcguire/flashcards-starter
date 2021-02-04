@@ -1,11 +1,12 @@
 const inquirer = require('inquirer');
 const data = require('./data');
+const Deck = require('./Deck');
 const Round = require('./Round');
 const prototypeQuestions = data.prototypeData;
 
 const genList = (round) => {
-  let card = round.returnCurrentCard();
-  
+  if (round.deck[0] !== undefined) {
+  let card = round.returnCurrentCard() || round.deck[0];
   let choices = card.answers.map((answer, index) => {
     return {
       key: index,
@@ -18,6 +19,9 @@ const genList = (round) => {
     name: 'answers',
     choices: choices
   };
+  } else {
+    return;
+  }
 }
 
 const getRound = (round) => {
@@ -38,14 +42,12 @@ async function main(round) {
   const getAnswer = await inquirer.prompt(genList(currentRound));
   const getConfirm = await inquirer.prompt(confirmUpdate(getAnswer.answers, round));
 
-    if(!round.returnCurrentCard() && round.endRound() !== false) {
+    if (!round.returnCurrentCard()) {
       round.endRound();
-      return false;
-    } else if(!round.returnCurrentCard()) {
-      round.endRound();
-      round = new Round(prototypeQuestions);
-      main(round);
-    } else {
+      if(round.deck !== []) {
+        main(round);
+      }     
+    } else if(round.returnCurrentCard()) {
       main(round);
     }
 }
