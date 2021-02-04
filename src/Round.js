@@ -1,4 +1,7 @@
 const Turn = require('../src/Turn');
+const Deck = require('./Deck');
+const data = require('./data');
+const prototypeQuestions = data.prototypeData;
 class Round {
   constructor(deck = []) {
     this.deck = deck
@@ -38,11 +41,16 @@ class Round {
   endRound() {
     const percentCorrect = Math.ceil(this.calculatePercentCorrect());
     if (percentCorrect >= 90) {
-      console.log(`** Round over! ** You answered ${percentCorrect}% of the questions correctly!`);
+      this.deck = []; this.incorrectGuesses = []; this.turns = 0;
+      console.log(`** Round over! ** You answered ${percentCorrect}% of the questions correctly!
+      --------------------------------------------------------------`);
       return `** Round over! ** You answered ${percentCorrect}% of the questions correctly!`;
     } else {
-      console.log(`SHUCKS! You missed the goal of 90%. Your score was ${percentCorrect}%, try again!`);
-      return false;
+      console.log(`SHUCKS! You missed the goal of 90%. Your score was ${percentCorrect}%, try again!
+      --------------------------------------------------------------`);
+      this.deck = prototypeQuestions;
+      this.incorrectGuesses = [];
+      this.turns = 0;
     }
   }
 }
