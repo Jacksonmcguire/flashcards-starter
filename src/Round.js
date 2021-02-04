@@ -1,6 +1,7 @@
 const Turn = require('../src/Turn');
 const Deck = require('./Deck');
 const data = require('./data');
+const Card = require('./Card');
 const prototypeQuestions = data.prototypeData;
 class Round {
   constructor(deck = []) {
@@ -48,9 +49,14 @@ class Round {
     } else {
       console.log(`SHUCKS! You missed the goal of 90%. Your score was ${percentCorrect}%, try again!
       --------------------------------------------------------------`);
-      this.deck = prototypeQuestions;
-      this.incorrectGuesses = [];
-      this.turns = 0;
+      prototypeQuestions.forEach(flashcard => {
+        const newCard = new Card(flashcard.id, 
+          flashcard.question, 
+          flashcard.answers, 
+          flashcard.correctAnswer);
+        this.deck.push(newCard);
+      })
+      this.incorrectGuesses = []; this.turns = 0;
     }
   }
 }
