@@ -1,9 +1,7 @@
 const chai = require('chai');
 const Card = require('../src/Card');
-const Deck = require('../src/Deck');
 const Game = require('../src/Game');
 const Round = require('../src/Round');
-const Turn = require('../src/Turn');
 const expect = chai.expect;
 
 describe('Game', () => {
@@ -28,6 +26,7 @@ describe('Game', () => {
       const game = new Game();
       const beforeStart = game.currentRound;
       const afterStart = game.start();
+
       expect(beforeStart).to.not.equal(afterStart);
       expect(afterStart).to.be.instanceof(Round);
     })

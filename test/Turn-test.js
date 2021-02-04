@@ -26,6 +26,7 @@ describe('Turn', function () {
         "answers": ["array", "object", "function"],
         "correctAnswer": "array"
       });
+
     expect(turn.card).to.be.a('object');
   });
 
@@ -41,6 +42,7 @@ describe('Turn', function () {
       "answers": ["array", "object", "function"],
       "correctAnswer": "array"
     });
+
     expect(turn.returnCard()).to.equal(turn.card);
   });
 
@@ -51,6 +53,7 @@ describe('Turn', function () {
       "answers": ["array", "object", "function"],
       "correctAnswer": "array"
     });
+
     expect(turn.evaluateGuess()).to.equal(false)
   });
 
@@ -61,6 +64,7 @@ describe('Turn', function () {
       "answers": ["array", "object", "function"],
       "correctAnswer": "array"
     });
+
     expect(turn.evaluateGuess()).to.equal(true)
   });
 
@@ -71,6 +75,7 @@ describe('Turn', function () {
       "answers": ["array", "object", "function"],
       "correctAnswer": "array"
     });
+
     expect(turn.giveFeedback()).to.equal('correct!')
   });
 
@@ -81,6 +86,7 @@ describe('Turn', function () {
       "answers": ["array", "object", "function"],
       "correctAnswer": "array"
     });
+    
     expect(turn.giveFeedback()).to.equal('incorrect!')
   });
 });

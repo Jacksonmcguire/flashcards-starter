@@ -1,8 +1,7 @@
 const Turn = require('../src/Turn');
-const Deck = require('./Deck');
 const data = require('./data');
-const Card = require('./Card');
 const prototypeQuestions = data.prototypeData;
+const fillDeck = require('./util').fillDeck;
 class Round {
   constructor(deck = []) {
     this.deck = deck
@@ -32,8 +31,8 @@ class Round {
   calculatePercentCorrect() {
     if (this.turns > 0) {
       const incorrect = (this.incorrectGuesses.length / this.turns);
-      const correct = 1 - incorrect;
-      return correct * 100;
+      const correct = (1 - incorrect) * 100;
+      return correct;
     } else {
       return 0;
     }
@@ -49,13 +48,7 @@ class Round {
     } else {
       console.log(`SHUCKS! You missed the goal of 90%. Your score was ${percentCorrect}%, try again!
       --------------------------------------------------------------`);
-      prototypeQuestions.forEach(flashcard => {
-        const newCard = new Card(flashcard.id, 
-          flashcard.question, 
-          flashcard.answers, 
-          flashcard.correctAnswer);
-        this.deck.push(newCard);
-      })
+      fillDeck(this.deck)
       this.incorrectGuesses = []; this.turns = 0;
     }
   }

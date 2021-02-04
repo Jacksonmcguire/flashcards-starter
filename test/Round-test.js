@@ -3,6 +3,7 @@ const expect = chai.expect;
 const Round = require('../src/Round');
 
 describe('Round', () => {
+  
   it('should be a function', () => {
     expect(Round).to.be.a('function');
   })
@@ -32,17 +33,18 @@ describe('Round', () => {
   
   describe('takeTurn', () => {
 
-    
     it('should update the rounds turn count, regardless of answer', () => {
       const arr = [1, 2, 3];
       const round = new Round(arr);
       round.takeTurn();
+
       expect(round.turns).to.equal(1);
     })
     
     it('should prompt the next flash card/update current flash card', () => {
       const arr = [1, 2, 3];
       const round = new Round(arr);
+      
       expect(round.returnCurrentCard()).to.equal(1);
       round.takeTurn();
       expect(round.returnCurrentCard()).to.equal(2);
@@ -55,6 +57,7 @@ describe('Round', () => {
         correctAnswer: 'sea otter'
       }];
       const round = new Round(arr);
+
       expect(round.incorrectGuesses).to.have.length(0);
       round.takeTurn('wrong');
       expect(round.incorrectGuesses).to.have.length(1);
@@ -67,22 +70,28 @@ describe('Round', () => {
         correctAnswer: 'sea otter'
       }];
       const round = new Round(arr);
+
       expect(round.takeTurn('sea otter')).to.equal('correct!');
       expect(round.takeTurn('pug')).to.equal('incorrect!');
     })
   })
 
   it('should be able to calculate percentage of correct answers for the round', () => {
-    const arr = [{ id: 1,
-      question: 'What is Robbie\'s favorite animal',
-      answers: ['sea otter', 'pug', 'capybara'],
-      correctAnswer: 'sea otter'
-    }, {id: 1,
-      question: 'What is Robbie\'s favorite animal',
-      answers: ['sea otter', 'pug', 'capybara'],
-      correctAnswer: 'sea otter'}];
+    const arr = [
+      { id: 1,
+        question: 'What is Robbie\'s favorite animal',
+        answers: ['sea otter', 'pug', 'capybara'],
+        correctAnswer: 'sea otter'
+      }, 
+    
+      {id: 1,
+        question: 'What is Robbie\'s favorite animal',
+        answers: ['sea otter', 'pug', 'capybara'],
+        correctAnswer: 'sea otter'}];
+
     const round = new Round(arr);
     round.takeTurn('sea otter');
+
     expect(round.calculatePercentCorrect()).to.equal(100);
     round.takeTurn('wrong');
     expect(round.calculatePercentCorrect()).to.equal(50);
@@ -90,7 +99,10 @@ describe('Round', () => {
 
   it('should be able to end the round', () => {
     const round = new Round();
-    expect(round.endRound()).to.equal(`** Round over! ** You answered 0% of the questions correctly!`);
+    round.incorrectGuesses = [];
+    round.turns = 10
+    expect(round.endRound()).to.equal(
+      `** Round over! ** You answered 100% of the questions correctly!`);
   })
 
 });
